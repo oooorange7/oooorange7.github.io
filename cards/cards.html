@@ -20,15 +20,15 @@
   <title>oooorange的个人博客</title>
 
   
-    <meta name="description" content="&#x2F;* 限制样式仅作用于 id&#x3D;&quot;my-svg&quot; 内的元素 *&#x2F;                 #my-svg svg {                     background-color: rgba(0,0,0,0);                 }                      #m">
+    <meta name="description" content="&#x2F;* 设置整体页面背景色（默认的浅色背景） *&#x2F;               &#x2F;* 默认的背景色为浅色 *&#x2F;         #my-card {             background-color: #ffffff;             padding: 10px 20px;  &#x2F;* 适当减小内边距 *&#x2F;             bo">
 <meta property="og:type" content="website">
 <meta property="og:title" content="oooorange的个人博客">
 <meta property="og:url" content="https://oooorange7.github.io/cards/cards.html">
 <meta property="og:site_name" content="oooorange的个人博客">
-<meta property="og:description" content="&#x2F;* 限制样式仅作用于 id&#x3D;&quot;my-svg&quot; 内的元素 *&#x2F;                 #my-svg svg {                     background-color: rgba(0,0,0,0);                 }                      #m">
+<meta property="og:description" content="&#x2F;* 设置整体页面背景色（默认的浅色背景） *&#x2F;               &#x2F;* 默认的背景色为浅色 *&#x2F;         #my-card {             background-color: #ffffff;             padding: 10px 20px;  &#x2F;* 适当减小内边距 *&#x2F;             bo">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-11-19T15:34:09.807Z">
-<meta property="article:modified_time" content="2024-11-19T15:34:09.807Z">
+<meta property="article:published_time" content="2024-11-20T05:37:27.227Z">
+<meta property="article:modified_time" content="2024-11-20T05:37:27.227Z">
 <meta property="article:author" content="oooorange">
 <meta name="twitter:card" content="summary">
   
@@ -77,55 +77,113 @@
   <span class="sep"></span>
   <a class="cap breadcrumb" href="/cards/cards.html"></a>
   </div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-11-19T15:34:09.807Z">2024-11-19</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-11-19T15:34:09.807Z">2024-11-19</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-11-20T05:37:27.227Z">2024-11-20</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-11-20T05:37:27.227Z">2024-11-20</time></span></div></div></div>
     
   </div>
-  </div><article class="md-text content"><body>
-    <svg id="my-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-        <defs>
-            <style>
-                /* 限制样式仅作用于 id="my-svg" 内的元素 */
-                #my-svg svg {
-                    background-color: rgba(0,0,0,0);
-                }
-    
-                #my-svg #image .line {
-                    fill: none;
-                    stroke: rgba(0,0,0,1);
-                    opacity: .7;
-                    stroke-miterlimit: 10;
-                    stroke-width: 0.5px;
-                    stroke-linecap: round;
-                }
-    
-                #my-svg #image .bg {
-                    height: 250px;
-                }
-    
-                #my-svg #detail .text {
-                    font-size: 12px;
-                    fill: rgba(0,0,0,1);
-                    font-weight: lighter;
-                }
-    
-                #my-svg #contact .item .icon {
-                    width: 16px;
-                    height: 16px;
-                }
-    
-                #my-svg #contact .item .text {
-                    font-size: 10px;
-                    fill: rgba(0,0,0,1);
-                    font-weight: lighter;
-                }
-    
-                #my-svg #quote .text {
-                    font-size: 10px;
-                    fill: rgba(0,0,0,1);
-                    font-weight: lighter;
-                }
-            </style>
-        </defs>
+  </div><article class="md-text content"><!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* 设置整体页面背景色（默认的浅色背景） */  
+            /* 默认的背景色为浅色 */
+        #my-card {
+            background-color: #ffffff;
+            padding: 10px 20px;  /* 适当减小内边距 */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 40px auto;  /* 居中显示 */
+            display: flex;
+            flex-direction: column;  /* 子元素垂直排列 */
+            justify-content: flex-start;  /* 确保内容紧贴顶部 */
+            height: auto;  /* 高度自适应 */
+        }
+        
+        #my-card p {
+            margin: 0 0 10px 0;  /* 行间距为 10px */
+            padding: 0;
+        }
+            
+            
+            
+
+        /* SVG 部分的样式 */
+        #my-svg svg {
+            background-color: rgba(255, 255, 255, 1); /* 保证背景为白色 */
+            width: 100%;  /* 宽度自适应 */
+            height: auto;  /* 高度根据内容自适应，保持比例 */
+            display: block; /* 防止 SVG 元素底部有空隙，通常是 inline 元素 */
+            margin: 0; /* 确保没有额外的外边距 */
+        }
+        
+
+        /* 文本样式 */
+        #my-svg .text {
+            font-size: 12px;
+            fill: black; /* 默认黑色文字 */
+        }
+
+        /* 线条样式 */
+        #my-svg .line {
+            stroke: black;
+            stroke-width: 0.5px;
+            stroke-linecap: round;
+        }
+        #my-svg svg {
+            background-color: rgba(255, 255, 255, 1); /* 浅色背景 */
+        }
+
+        /* 线条样式 */
+        #my-svg #image .line {
+            fill: none;
+            stroke: rgba(0, 0, 0, 1);
+            opacity: .7;
+            stroke-miterlimit: 10;
+            stroke-width: 0.5px;
+            stroke-linecap: round;
+        }
+
+        #my-svg #image .bg {
+            height: 250px;
+        }
+
+        /* 文本样式 */
+        #my-svg #detail .text {
+            font-size: 12px;
+            fill: rgba(0, 0, 0, 1);
+            font-weight: lighter;
+        }
+
+        #my-svg #contact .item .icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        #my-svg #contact .item .text {
+            font-size: 10px;
+            fill: rgba(0, 0, 0, 1);
+            font-weight: lighter;
+        }
+
+        #my-svg #quote .text {
+            font-size: 10px;
+            fill: rgba(0, 0, 0, 1);
+            font-weight: lighter;
+        }
+    </style>
+        
+</head>
+<body>
+
+    <!-- 卡片区域 -->
+    <div id="my-card">
+        <!-- 这是你原先的 SVG 内容 -->
+        <svg id="my-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 200">
+            <defs>
+                
+            </defs>
     <title>Cards</title>
     <g id="image">
         <line class="line" x1="250.5" y1="20" x2="250.5" y2="170"/>
@@ -135,7 +193,7 @@
 
 
     <g id="detail">
-        <text class="text" transform="translate(20 35)">欢迎您朋友 🎉</text>
+        <text class="text" transform="translate(20 35)">欢迎 🎉</text>
         <text class="text" transform="translate(20 65)" id="today-date">今天是 11 月 18 日，星期一</text>
         <text class="text" transform="translate(20 95)" id="day-of-year">也是 2024 年的第 322 天</text>
         <text class="text" transform="translate(20 125)" id="love-days">与 Ta 恋爱已经 1803 天</text>
