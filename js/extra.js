@@ -1,4 +1,17 @@
 (function () {
+  function isSvg(url) {
+    if (!url) return false;
+    const clean = String(url).split('#')[0].split('?')[0];
+    return clean.toLowerCase().endsWith('.svg');
+  }
+
+  function isLocalPostImage(url) {
+    if (!url) return false;
+    const u = String(url);
+    // Hexo/Stellar root is usually '/', so local images resolve as '/images/...'
+    return u.startsWith('/images/');
+  }
+
   function isMdContentImage(el) {
     if (!el || el.tagName !== 'IMG') return false;
     if (el.classList.contains('error')) return false;
@@ -16,6 +29,10 @@
 
     // Ensure the paragraph belongs to the markdown article body, not footers/widgets
     if (p.closest('.article-footer, #share, .social-wrap')) return false;
+    const src = getFullImageSrc(el);
+    // Only apply to real photo assets (avoid UI icons, svg badges, etc.)
+    if (!isLocalPostImage(src)) return false;
+    if (isSvg(src)) return false;
     return true;
   }
 
@@ -31,7 +48,11 @@
   function getGallerySlides(root) {
     const container = root || document;
     const imgs = Array.from(container.querySelectorAll('article.md-text p>img, .md-text p>img'))
-      .filter((img) => !img.classList.contains('error'));
+      .filter((img) => !img.classList.contains('error'))
+      .filter((img) => {
+        const src = getFullImageSrc(img);
+        return isLocalPostImage(src) && !isSvg(src);
+      });
 
     const slides = imgs
       .map((img) => {
