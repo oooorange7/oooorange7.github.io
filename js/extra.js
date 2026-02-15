@@ -2,8 +2,21 @@
   function isMdContentImage(el) {
     if (!el || el.tagName !== 'IMG') return false;
     if (el.classList.contains('error')) return false;
-    // Only intercept images inside rendered markdown content
-    return !!el.closest('article.md-text, .md-text');
+    // Only intercept real content images (usually rendered as <p><img ...></p>)
+    // Avoid hijacking UI icons (share buttons, footer icons, etc.) that also live inside .md-text.
+    const mdRoot = el.closest('article.md-text, .md-text');
+    if (!mdRoot) return false;
+
+    // Exclude common non-content areas
+    if (el.closest('.article-footer, #share, .social-wrap, .share-item, footer, header, nav')) return false;
+
+    // Content images in this theme are typically placed directly inside paragraphs
+    const p = el.closest('p');
+    if (!p) return false;
+
+    // Ensure the paragraph belongs to the markdown article body, not footers/widgets
+    if (p.closest('.article-footer, #share, .social-wrap')) return false;
+    return true;
   }
 
   function getFullImageSrc(img) {
@@ -17,7 +30,7 @@
 
   function getGallerySlides(root) {
     const container = root || document;
-    const imgs = Array.from(container.querySelectorAll('article.md-text img, .md-text img'))
+    const imgs = Array.from(container.querySelectorAll('article.md-text p>img, .md-text p>img'))
       .filter((img) => !img.classList.contains('error'));
 
     const slides = imgs
@@ -65,7 +78,7 @@
 
   // Make images feel clickable
   document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('article.md-text img, .md-text img').forEach((img) => {
+    document.querySelectorAll('article.md-text p>img, .md-text p>img').forEach((img) => {
       if (img && img.style) img.style.cursor = 'zoom-in';
     });
   });
