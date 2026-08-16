@@ -1,0 +1,460 @@
+:root {
+  --yz-ink: var(--text-p1);
+  --yz-paper: var(--site-bg);
+  --yz-red: var(--theme-link);
+  --yz-yellow: var(--card);
+  --yz-line: var(--block-border);
+}
+
+.l_body[layout="yangzhou"] {
+  background: var(--yz-paper);
+  width: min(100%, 1480px);
+  grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
+}
+
+.l_body[layout="yangzhou"] .l_main {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+.l_body[layout="yangzhou"] .l_main > .article.banner {
+  display: none;
+}
+
+.l_body[layout="yangzhou"] .l_main > article.md-text.content {
+  max-width: none;
+  padding: 0;
+}
+
+.l_body[layout="yangzhou"] .l_right {
+  display: none;
+}
+
+.l_body[layout="yangzhou"] .l_main > .stellar-logo {
+  display: none;
+}
+
+.yz-page {
+  color: var(--yz-ink);
+  padding: 18px clamp(16px, 4vw, 56px) 72px;
+  min-height: 100vh;
+}
+
+.yz-hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--block-border);
+  border-radius: 20px;
+  background: var(--card);
+  padding: clamp(24px, 5vw, 64px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .06);
+}
+
+.yz-hero::after {
+  content: "扬";
+  position: absolute;
+  right: -2vw;
+  bottom: -13vw;
+  font: 900 clamp(220px, 34vw, 460px)/1 sans-serif;
+  color: var(--block);
+  transform: rotate(-8deg);
+  pointer-events: none;
+}
+
+.yz-back,
+.yz-kicker,
+.yz-deck,
+.yz-toolbar,
+.yz-hero h1 {
+  position: relative;
+  z-index: 1;
+}
+
+.yz-back {
+  display: inline-flex;
+  color: var(--yz-ink);
+  font-weight: 750;
+  text-decoration: none;
+  margin-bottom: clamp(32px, 6vw, 74px);
+}
+
+.yz-kicker,
+.yz-section-label {
+  margin: 0;
+  font: 800 12px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: .13em;
+}
+
+.yz-hero h1 {
+  max-width: 770px;
+  margin: 10px 0 20px;
+  font: 900 clamp(54px, 10vw, 122px)/.87 "Smiley Sans", "Microsoft Yahei", sans-serif;
+  letter-spacing: -.07em;
+}
+
+.yz-hero h1 span {
+  color: var(--yz-red);
+}
+
+.yz-deck {
+  max-width: 610px;
+  margin: 0;
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 650;
+}
+
+.yz-toolbar {
+  margin-top: 42px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.yz-view-switch {
+  display: inline-flex;
+  padding: 5px;
+  border: 1px solid var(--block-border);
+  border-radius: 999px;
+  background: var(--block);
+}
+
+.yz-view-switch button {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--yz-ink);
+  padding: 11px 17px;
+  font: inherit;
+  font-weight: 780;
+  cursor: pointer;
+}
+
+.yz-view-switch button.is-active {
+  background: var(--theme-link);
+  color: #fff;
+}
+
+.yz-count {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.yz-category-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 48px 0 22px;
+}
+
+.l_body[layout="yangzhou"] .yz-intro {
+  position: static;
+  display: block;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  flex-shrink: 1;
+  --width-sidebar: auto;
+  margin: 34px 0 0;
+  padding: clamp(22px, 4vw, 38px);
+  border: 1px solid var(--block-border);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .04);
+}
+
+.yz-intro h2 {
+  margin: 0 0 18px;
+  color: var(--text-p1);
+  font-size: clamp(25px, 4vw, 34px);
+}
+
+.yz-intro p {
+  margin: 12px 0 0;
+  color: var(--text-p2);
+  line-height: 1.8;
+}
+
+.yz-category-tabs button {
+  padding: 9px 17px;
+  border: 1px solid var(--block-border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--yz-ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.yz-category-tabs button.is-active {
+  color: #fff;
+  border-color: var(--theme-link);
+  background: var(--theme-link);
+}
+
+.yz-tier-list {
+  display: grid;
+  gap: 13px;
+}
+
+.yz-tier-row {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  min-height: 162px;
+  border: 1px solid var(--block-border);
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--card);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .04);
+}
+
+.yz-tier-name {
+  display: grid;
+  place-items: center;
+  padding: 14px 8px;
+  border-right: 1px solid var(--block-border);
+  background: var(--tier-color);
+  color: var(--tier-text, var(--yz-ink));
+  font: 900 clamp(24px, 4vw, 42px)/1 "Smiley Sans", sans-serif;
+  letter-spacing: -.06em;
+  writing-mode: vertical-rl;
+}
+
+.yz-tier-cards {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+  gap: 12px;
+  align-content: start;
+}
+
+.yz-card {
+  appearance: none;
+  border: 1px solid var(--block-border);
+  border-radius: 13px;
+  overflow: hidden;
+  padding: 0;
+  text-align: left;
+  background: var(--card);
+  color: var(--yz-ink);
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .07);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+
+.yz-card:hover,
+.yz-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--theme-link);
+  box-shadow: 0 9px 22px rgba(0, 0, 0, .11);
+}
+
+.yz-card-cover,
+.yz-dialog-cover {
+  background-color: var(--card-color, #ef695e);
+  background-image:
+    linear-gradient(135deg, transparent 45%, rgba(255,255,255,.24) 45% 55%, transparent 55%),
+    radial-gradient(circle at 82% 22%, rgba(255,255,255,.42) 0 12%, transparent 12.5%);
+  background-size: auto, auto;
+  background-position: center;
+}
+
+.yz-card-cover {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background-size: cover;
+  border-bottom: 1px solid var(--block-border);
+}
+
+.yz-card-cover::after {
+  content: attr(data-initial);
+  position: absolute;
+  right: 10px;
+  bottom: -10px;
+  font: 900 70px/1 "Smiley Sans", sans-serif;
+  color: rgba(255,255,255,.72);
+}
+
+.yz-card-copy {
+  display: block;
+  padding: 11px 12px 13px;
+}
+
+.yz-card-copy strong,
+.yz-card-copy small {
+  display: block;
+}
+
+.yz-card-copy strong {
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+.yz-card-copy small {
+  margin-top: 5px;
+  color: var(--text-p3);
+  font-weight: 650;
+}
+
+.yz-empty {
+  margin: auto;
+  align-self: center;
+  color: var(--text-p3);
+}
+
+.yz-markdown-view {
+  margin-top: 48px;
+  padding: clamp(22px, 5vw, 54px);
+  border: 1px solid var(--block-border);
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .05);
+}
+
+.yz-markdown-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: end;
+  padding-bottom: 30px;
+  border-bottom: 1.5px solid var(--yz-line);
+}
+
+.yz-markdown-head h2 {
+  margin: 6px 0 0;
+  font-size: clamp(34px, 5vw, 58px);
+}
+
+.yz-markdown-head > p {
+  margin: 0;
+  color: var(--text-p3);
+}
+
+.yz-source {
+  max-width: 760px;
+  margin: 36px auto 0;
+}
+
+.yz-dialog {
+  width: min(680px, calc(100vw - 28px));
+  max-height: min(84vh, 840px);
+  padding: 0;
+  border: 1px solid var(--block-border);
+  border-radius: 22px;
+  color: var(--yz-ink);
+  background: var(--card);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, .3);
+  overflow: auto;
+}
+
+.yz-dialog::backdrop {
+  background: rgba(23,21,15,.72);
+  backdrop-filter: blur(4px);
+}
+
+.yz-dialog-close {
+  position: fixed;
+  z-index: 3;
+  margin: 14px 0 0 min(620px, calc(100vw - 82px));
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--block-border);
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--yz-ink);
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.yz-dialog-cover {
+  min-height: 230px;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid var(--block-border);
+}
+
+.yz-dialog-body {
+  padding: clamp(22px, 5vw, 46px);
+}
+
+.yz-dialog-meta {
+  margin: 0 0 6px;
+  color: var(--yz-red);
+  font: 800 12px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: .1em;
+}
+
+.yz-dialog-body h2 {
+  margin: 0 0 20px;
+  font-size: clamp(32px, 6vw, 52px);
+}
+
+.yz-dialog-copy > :first-child {
+  margin-top: 0;
+}
+
+body:has(.yz-dialog[open]) {
+  overflow: hidden;
+}
+
+@media (max-width: 720px) {
+  .l_body[layout="yangzhou"] {
+    display: block;
+    width: 100%;
+  }
+
+  .yz-page {
+    padding: 10px 10px 54px;
+  }
+
+  .yz-hero {
+    border-radius: 18px;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, .06);
+  }
+
+  .yz-toolbar,
+  .yz-view-switch {
+    width: 100%;
+  }
+
+  .yz-view-switch button {
+    flex: 1;
+    padding-inline: 10px;
+  }
+
+  .yz-tier-row {
+    grid-template-columns: 72px minmax(0, 1fr);
+    min-height: 140px;
+  }
+
+  .yz-tier-name {
+    font-size: 27px;
+  }
+
+  .yz-tier-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 9px;
+    gap: 9px;
+  }
+
+  .yz-card-copy strong {
+    font-size: 15px;
+  }
+
+  .yz-markdown-head {
+    display: block;
+  }
+
+  .yz-markdown-head > p {
+    margin-top: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yz-card {
+    transition: none;
+  }
+}

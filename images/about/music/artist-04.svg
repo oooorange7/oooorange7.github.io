@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a855f7"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" rx="56" fill="url(#g)"/>
+  <g stroke="#ffffff" stroke-opacity="0.22" stroke-width="10" fill="none">
+    <path d="M120 520c140-110 220 110 360 0s220 110 320 0"/>
+    <path d="M120 600c140-110 220 110 360 0s220 110 320 0"/>
+  </g>
+  <circle cx="400" cy="310" r="150" fill="#ffffff" fill-opacity="0.14"/>
+  <text x="50%" y="78%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" fill-opacity="0.9"
+        font-size="34" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial">
+    ARTIST
+  </text>
+</svg>
