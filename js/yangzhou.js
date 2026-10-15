@@ -37,11 +37,18 @@
     credit.replaceChildren();
     credit.hidden = !entry.photo;
     if (entry.photo) {
-      const link = document.createElement('a');
-      link.textContent = `图片来源：${entry.photo.credit}`;
-      link.href = entry.photo.source;
-      link.target = '_blank'; link.rel = 'noopener noreferrer';
-      credit.append(document.createTextNode(`${entry.photoKind || '参考图'} · `), link);
+      const kind = entry.photoKind || '参考图';
+      if (!entry.photo.credit.includes(kind)) credit.append(document.createTextNode(`${kind} · `));
+      if (entry.photo.source) {
+        const link = document.createElement('a');
+        link.textContent = `图片来源：${entry.photo.credit}`;
+        link.href = entry.photo.source;
+        link.target = '_blank'; link.rel = 'noopener noreferrer';
+        credit.append(link);
+      } else {
+        // Uploaded photos can have truthful attribution without a source URL.
+        credit.append(document.createTextNode(`图片来源：${entry.photo.credit}`));
+      }
     }
     if (!dialog.open) dialog.showModal();
     dialog.scrollTop = 0;
@@ -49,6 +56,8 @@
   function cardFor(entry, index) {
     const card = document.createElement('button'); card.type = 'button'; card.className = 'yz-card';
     card.setAttribute('aria-label', `查看${entry.name}的评价详情`);
+    card.setAttribute('aria-haspopup', 'dialog');
+    card.setAttribute('aria-controls', 'yz-entry-dialog');
     const cover = document.createElement('span'); cover.className = 'yz-card-cover';
     cover.style.setProperty('--card-color', palette[index % palette.length]);
     if (entry.image) cover.append(photoImage(entry, 'yz-card-photo'));
@@ -64,6 +73,7 @@
     const filtered = entries.filter(entry => activeCategory === '全部' || entry.category === activeCategory);
     model.tiers.forEach(tier => {
       const row = document.createElement('section'); row.className = 'yz-tier-row'; row.style.setProperty('--tier-color', tier.color);
+      row.setAttribute('data-yz-reveal', '');
       const title = document.createElement('h2'); title.className = 'yz-tier-name'; title.textContent = tier.label;
       const cards = document.createElement('div'); cards.className = 'yz-tier-cards';
       const items = filtered.filter(entry => entry.tier === tier.id).sort(model.compareRatings);
@@ -89,6 +99,7 @@
       else { const empty = document.createElement('p'); empty.className = 'yz-empty'; empty.textContent = '这一档还没有条目。'; cards.append(empty); }
       row.append(title, cards); tierList.append(row);
     });
+    document.dispatchEvent(new Event('yangzhou:content-change'));
   }
   const tabs = page.querySelector('[data-category-tabs]');
   ['全部', ...new Set(entries.map(entry => entry.category))].forEach(category => {
@@ -107,18 +118,50 @@
     const rect = dialog.getBoundingClientRect();
     if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) dialog.close();
   });
-  page.querySelectorAll('[data-view]').forEach(button => {
-    button.addEventListener('click', () => {
-      const view = button.dataset.view;
-      page.querySelectorAll('[data-view]').forEach(item => { item.classList.toggle('is-active', item === button); item.setAttribute('aria-pressed', String(item === button)); });
-      page.querySelectorAll('[data-panel]').forEach(panel => { panel.hidden = panel.dataset.panel !== view; });
-      if (view === 'map') mapView.show();
-      try { localStorage.setItem('yangzhou-view', view); } catch {}
+  const controls = [...page.querySelectorAll('[data-view]')];
+  const panels = [...page.querySelectorAll('[data-panel]')];
+  const content = page.querySelector('#yz-content');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const modes = {
+    tier: { title: '用一张榜单，认识一座城。', description: '吃过的认真评，想去的慢慢补。评价很主观，出发前请结合原文。', action: '向下阅读前言', contentAction: '查看榜单' },
+    map: { title: '把想去的，放在地图上。', description: '按位置找店 · 查看附近。只显示评级，点开才是地点和评价。', action: '向下阅读前言', contentAction: '打开评级地图' },
+    markdown: { title: '完整记录，慢慢读。', description: '保留完整章节与评价，安静地读这份私人指南。', action: '向下阅读前言', contentAction: '阅读完整原文' }
+  };
+  let activeView = 'tier';
+  let mapNearViewport = !('IntersectionObserver' in window);
+  if ('IntersectionObserver' in window) {
+    const mapObserver = new IntersectionObserver(items => {
+      mapNearViewport = items.some(item => item.isIntersecting);
+      if (mapNearViewport && activeView === 'map') mapView.show();
+    }, { rootMargin: '160px 0px', threshold: 0 });
+    mapObserver.observe(page.querySelector('.yz-reading-stage'));
+  }
+  function setView(view, { persist = true, navigate = false, animate = true } = {}) {
+    if (!modes[view]) return;
+    activeView = view;
+    page.dataset.activeView = view;
+    controls.forEach(item => {
+      const selected = item.dataset.view === view;
+      item.classList.toggle('is-active', selected);
+      item.setAttribute('aria-pressed', String(selected));
     });
-  });
+    panels.forEach(panel => { panel.hidden = panel.dataset.panel !== view; });
+    for (const [selector, key] of [['[data-mode-heading]', 'title'], ['[data-mode-description]', 'description'], ['[data-explore-label]', 'action'], ['[data-content-explore-label]', 'contentAction']]) {
+      const element = page.querySelector(selector); if (element) element.textContent = modes[view][key];
+    }
+    if (view === 'map' && mapNearViewport) mapView.show();
+    if (navigate) content.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'start' });
+    const panel = panels.find(item => item.dataset.panel === view);
+    if (animate && !reduced.matches && panel?.animate) panel.animate([{ opacity: .3, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.2,.65,.25,1)' });
+    if (persist) try { localStorage.setItem('yangzhou-view', view); } catch {}
+    document.dispatchEvent(new Event('yangzhou:content-change'));
+  }
+  controls.forEach(button => button.addEventListener('click', () => setView(button.dataset.view, { navigate: button.dataset.viewOrigin === 'dock' })));
   render();
+  let initialView = 'tier';
   try {
     const saved = localStorage.getItem('yangzhou-view');
-    if (['markdown', 'map'].includes(saved)) page.querySelector(`[data-view="${saved}"]`).click();
+    if (modes[saved]) initialView = saved;
   } catch {}
+  setView(initialView, { persist: false, animate: false });
 })();

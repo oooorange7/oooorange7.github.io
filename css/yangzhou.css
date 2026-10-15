@@ -4,41 +4,23 @@
   --yz-red: var(--theme-link);
   --yz-yellow: var(--card);
   --yz-line: var(--block-border);
+  --yz-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif;
 }
 
-.l_body[layout="yangzhou"] {
+html.yz-document, .yz-feature {
+  font-family: var(--yz-font);
+  color: var(--yz-ink);
   background: var(--yz-paper);
-  width: min(100%, 1480px);
-  grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
-}
-
-.l_body[layout="yangzhou"] .l_main {
-  width: 100%;
-  min-width: 0;
-  max-width: none;
-}
-
-.l_body[layout="yangzhou"] .l_main > .article.banner {
-  display: none;
-}
-
-.l_body[layout="yangzhou"] .l_main > article.md-text.content {
-  max-width: none;
-  padding: 0;
-}
-
-.l_body[layout="yangzhou"] .l_right {
-  display: none;
-}
-
-.l_body[layout="yangzhou"] .l_main > .stellar-logo {
-  display: none;
+  font-size: 16px;
+  line-height: 1.75;
 }
 
 .yz-page {
   color: var(--yz-ink);
   container-type: inline-size;
-  padding: 18px clamp(16px, 4vw, 56px) 72px;
+  width: min(100%, 1680px);
+  margin: 0 auto;
+  padding: 24px clamp(16px, 3vw, 48px) 40px;
   min-height: 100vh;
 }
 
@@ -46,12 +28,15 @@
   display: none !important;
 }
 
-.yz-page *, .yz-dialog * { box-sizing: border-box; }
+.yz-page, .yz-page *, .yz-dialog, .yz-dialog * { box-sizing: border-box; }
+.yz-page button, .yz-dialog { font-family: var(--yz-font); }
+.yz-page h2, .yz-page h3, .yz-dialog h2 { line-height: 1.35; }
+.yz-page a:focus-visible, .yz-author button:focus-visible { outline: 3px solid var(--theme-link); outline-offset: 4px; border-radius: 4px; }
 
 .yz-page .yz-hero {
   position: relative;
   margin: 0;
-  overflow: hidden;
+  overflow: clip;
   border: 1px solid var(--block-border);
   border-radius: 20px;
   background: var(--card);
@@ -62,9 +47,9 @@
 .yz-hero::after {
   content: "扬";
   position: absolute;
-  right: -2vw;
-  bottom: -13vw;
-  font: 900 clamp(220px, 34vw, 460px)/1 sans-serif;
+  right: 0;
+  bottom: -.19em;
+  font: 900 clamp(220px, 30vw, 440px)/1 var(--yz-font);
   color: var(--block);
   transform: rotate(-8deg);
   pointer-events: none;
@@ -95,21 +80,27 @@
 }
 
 .yz-page .yz-hero h1 {
-  max-width: 770px;
-  margin: 10px 0 20px;
-  font: 900 clamp(48px, 8.5vw, 96px)/.95 "Smiley Sans", "Microsoft Yahei", sans-serif;
-  letter-spacing: -.07em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .08em .15em;
+  max-width: none;
+  margin: 18px 0 22px;
+  font: 850 clamp(46px, 6.6vw, 92px)/1.22 var(--yz-font);
+  letter-spacing: -.045em;
 }
 
-.yz-page .yz-hero h1 span {
+.yz-title-city, .yz-title-rating { display: block; white-space: nowrap; }
+.yz-page .yz-hero .yz-title-rating {
   color: var(--yz-red);
 }
 
 .yz-page .yz-deck {
-  max-width: 610px;
+  max-width: 780px;
   margin: 0;
   font-size: clamp(16px, 2vw, 20px);
   font-weight: 650;
+  line-height: 1.75;
 }
 
 .yz-toolbar {
@@ -133,7 +124,7 @@
   align-items: center;
   gap: 10px;
   min-width: 0;
-  min-height: 94px;
+  min-height: 84px;
   border: 1px solid var(--block-border);
   border-radius: 14px;
   background: var(--block);
@@ -149,7 +140,7 @@
 .yz-mode-icon svg { display: block; width: 30px; height: 30px; }
 .yz-mode-copy { display: block; min-width: 0; }
 .yz-mode-copy strong { display: block; font-size: 18px; line-height: 1.3; }
-.yz-mode-copy small { display: block; margin-top: 6px; font-size: 12px; line-height: 1.5; color: var(--text-p3); }
+.yz-mode-copy small { display: block; margin-top: 6px; font-size: 12px; line-height: 1.5; color: var(--text-p3); text-wrap: balance; }
 .yz-view-switch .yz-mode-map { border: 2px solid var(--theme-link); }
 .yz-mode-map .yz-mode-icon, .yz-mode-map strong { color: var(--theme-link); }
 .yz-view-switch button:hover, .yz-view-switch button:focus-visible { border-color: var(--theme-link); }
@@ -175,7 +166,7 @@
   margin: 48px 0 22px;
 }
 
-.l_body[layout="yangzhou"] .yz-intro {
+.yz-page .yz-intro {
   position: static;
   display: block;
   width: 100%;
@@ -244,8 +235,8 @@
   border-right: 1px solid var(--block-border);
   background: var(--tier-color);
   color: #30271e;
-  font: 900 clamp(24px, 4vw, 42px)/1 "Smiley Sans", sans-serif;
-  letter-spacing: -.06em;
+  font: 850 clamp(24px, 4vw, 38px)/1.3 var(--yz-font);
+  letter-spacing: .06em;
   writing-mode: vertical-rl;
 }
 
@@ -329,7 +320,7 @@
 
 .yz-card-copy strong {
   font-size: 17px;
-  line-height: 1.25;
+  line-height: 1.45;
 }
 
 .yz-card-copy small {
@@ -373,7 +364,7 @@
 }
 
 .yz-source {
-  max-width: 760px;
+  max-width: 960px;
   margin: 36px auto 0;
 }
 
@@ -482,6 +473,34 @@
   font-size: clamp(32px, 6vw, 52px);
 }
 
+.yz-author {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .8fr);
+  align-items: center;
+  gap: 30px 48px;
+  margin-top: 48px;
+  padding: 36px clamp(22px, 3vw, 40px) 22px;
+  border: 1px solid var(--block-border);
+  border-radius: 20px;
+  background: var(--card);
+}
+.yz-author-profile { display: flex; align-items: center; gap: 20px; min-width: 0; }
+.yz-author-avatar { flex: 0 0 72px; width: 72px; height: 72px; }
+.yz-author-avatar img { display: block; width: 72px; height: 72px; border-radius: 50%; object-fit: cover; }
+.yz-author h2 { margin: 8px 0 6px; color: var(--text-p1); font-size: 28px; overflow-wrap: anywhere; }
+.yz-page .yz-author-bio { margin: 0; color: var(--text-p3); font-size: 14px; line-height: 1.8; }
+.yz-author-links { display: flex; justify-content: flex-end; align-content: center; flex-wrap: wrap; gap: 10px; }
+.yz-author-links a, .yz-author-links button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  min-height: 44px; padding: 9px 14px; border: 1px solid var(--block-border); border-radius: 10px;
+  color: var(--text-p1); background: var(--block); font: 650 14px/1.5 var(--yz-font); text-decoration: none; cursor: pointer;
+}
+.yz-author-links a:hover, .yz-author-links button:hover { color: var(--theme-link); border-color: var(--theme-link); }
+.yz-author-links span { color: var(--text-p3); }
+.yz-colophon { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 10px 22px; padding-top: 20px; border-top: 1px solid var(--block-border); font-size: 12px; color: var(--text-p3); }
+.yz-colophon a { color: inherit; }
+.yz-colophon a:last-child { margin-left: auto; }
+
 .yz-dialog-copy > :first-child {
   margin-top: 0;
 }
@@ -491,13 +510,8 @@ body:has(.yz-dialog[open]) {
 }
 
 @media (max-width: 720px) {
-  .l_body[layout="yangzhou"] {
-    display: block;
-    width: 100%;
-  }
-
   .yz-page {
-    padding: 10px 10px 54px;
+    padding: 12px 12px 24px;
   }
 
   .yz-hero {
@@ -545,12 +559,22 @@ body:has(.yz-dialog[open]) {
   .yz-markdown-head > p {
     margin-top: 10px;
   }
+  .yz-map-heading { align-items: flex-start; flex-direction: column; gap: 18px; }
+  .yz-map-heading h2 { font-size: clamp(26px, 7vw, 36px); }
+  .yz-map-actions { flex-wrap: wrap; }
+  .yz-map-canvas { height: clamp(400px, 65svh, 620px); }
+  .yz-author { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 28px; padding: 26px 22px 20px; }
+  .yz-author-profile { gap: 14px; }
+  .yz-author-links { justify-content: flex-start; gap: 8px; }
+  .yz-author-links a, .yz-author-links button { flex: 1 1 calc(50% - 8px); }
+  .yz-colophon { gap: 8px 16px; }
+  .yz-colophon > span { flex-basis: 100%; }
 }
 
-/* The in-app preview can be narrow even with the blog sidebar still visible. */
+/* Keep the title and controls comfortable on narrow phones and split views. */
 @container (max-width: 600px) {
   .yz-page .yz-hero { padding: 22px; }
-  .yz-page .yz-hero h1 { font-size: clamp(40px, 16cqi, 54px); }
+  .yz-page .yz-hero h1 { flex-direction: column; align-items: flex-start; gap: .1em; font-size: clamp(38px, 10cqi, 58px); line-height: 1.24; letter-spacing: -.04em; }
   .yz-view-switch { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .yz-view-switch button { align-items: flex-start; padding: 14px 10px; gap: 8px; }
   .yz-mode-icon { flex-basis: 24px; width: 24px; font-size: 24px; }
@@ -563,6 +587,20 @@ body:has(.yz-dialog[open]) {
   .yz-tier-cards { padding: 9px; gap: 9px; }
   .yz-rating-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
   .yz-card-copy strong { font-size: 15px; }
+}
+
+@media (max-width: 360px) {
+  .yz-page .yz-hero, .yz-page .yz-intro { padding: 20px 16px; }
+  .yz-tier-row { grid-template-columns: 48px minmax(0, 1fr); }
+  .yz-page .yz-tier-name { font-size: 24px; }
+  .yz-card-copy { padding: 9px 8px 11px; }
+  .yz-card-copy strong { font-size: 14px; }
+  .yz-mode-copy strong { font-size: 14px; }
+  .yz-mode-copy small { font-size: 11px; }
+  .yz-view-switch button:not([data-view="markdown"]) { flex-direction: column; min-height: 118px; }
+  .yz-view-switch button:not([data-view="markdown"]) .yz-mode-icon { flex-basis: auto; height: 24px; }
+  .yz-author-profile { align-items: flex-start; }
+  .yz-author-avatar, .yz-author-avatar img { width: 54px; height: 54px; flex-basis: 54px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
