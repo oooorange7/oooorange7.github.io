@@ -121,6 +121,7 @@
   const controls = [...page.querySelectorAll('[data-view]')];
   const panels = [...page.querySelectorAll('[data-panel]')];
   const content = page.querySelector('#yz-content');
+  const editorialHeading = page.querySelector('.yz-editorial-heading');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const modes = {
     tier: { title: '用一张榜单，认识一座城。', description: '吃过的认真评，想去的慢慢补。评价很主观，出发前请结合原文。', action: '向下阅读前言', contentAction: '查看榜单' },
@@ -128,6 +129,7 @@
     markdown: { title: '完整记录，慢慢读。', description: '保留完整章节与评价，安静地读这份私人指南。', action: '向下阅读前言', contentAction: '阅读完整原文' }
   };
   let activeView = 'tier';
+  let modeAnimations = [];
   let mapNearViewport = !('IntersectionObserver' in window);
   if ('IntersectionObserver' in window) {
     const mapObserver = new IntersectionObserver(items => {
@@ -138,6 +140,9 @@
   }
   function setView(view, { persist = true, navigate = false, animate = true } = {}) {
     if (!modes[view]) return;
+    const changed = activeView !== view;
+    modeAnimations.forEach(animation => animation?.cancel?.());
+    modeAnimations = [];
     activeView = view;
     page.dataset.activeView = view;
     controls.forEach(item => {
@@ -150,13 +155,26 @@
       const element = page.querySelector(selector); if (element) element.textContent = modes[view][key];
     }
     if (view === 'map' && mapNearViewport) mapView.show();
-    if (navigate) content.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'start' });
     const panel = panels.find(item => item.dataset.panel === view);
-    if (animate && !reduced.matches && panel?.animate) panel.animate([{ opacity: .3, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.2,.65,.25,1)' });
+    if (navigate) {
+      // A deliberate selection must reveal its result, not only recolor a tab.
+      // Every mode shares its introduction; never scroll its title behind the dock.
+      content.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'start' });
+      content.focus?.({ preventScroll: true });
+    }
+    if (animate && changed && !reduced.matches) {
+      [editorialHeading, panel].forEach(target => {
+        if (!target?.animate) return;
+        modeAnimations.push(target.animate(
+          [{ opacity: .3, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }],
+          { duration: 800, easing: 'cubic-bezier(.22,.61,.36,1)' }
+        ));
+      });
+    }
     if (persist) try { localStorage.setItem('yangzhou-view', view); } catch {}
     document.dispatchEvent(new Event('yangzhou:content-change'));
   }
-  controls.forEach(button => button.addEventListener('click', () => setView(button.dataset.view, { navigate: button.dataset.viewOrigin === 'dock' })));
+  controls.forEach(button => button.addEventListener('click', () => setView(button.dataset.view, { navigate: true })));
   render();
   let initialView = 'tier';
   try {
