@@ -27,6 +27,7 @@
     dialog.querySelector('[data-dialog-title]').textContent = poi?.name || entry.name;
     dialog.querySelector('[data-dialog-meta]').textContent = `${entry.category}${entry.group ? ` · ${entry.group}` : ''} / ${entry.rating === '/' ? '待吃' : entry.rating === '*' ? '待评' : entry.rating || '待评'}`;
     dialog.querySelector('[data-dialog-content]').innerHTML = entry.detailHTML;
+    window.YangzhouFeedback?.setEntry(dialog, entry);
     const location = dialog.querySelector('[data-dialog-location]');
     location.hidden = !poi || !(poi.address || poi.rangeLabel);
     location.textContent = poi ? [poi.address, poi.rangeLabel].filter(Boolean).join(' · ') : '';
@@ -124,9 +125,10 @@
   const editorialHeading = page.querySelector('.yz-editorial-heading');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const modes = {
-    tier: { title: '用一张榜单，认识一座城。', description: '吃过的认真评，想去的慢慢补。评价很主观，出发前请结合原文。', action: '向下阅读前言', contentAction: '查看榜单' },
+    tier: { title: '用一张榜单，认识一座城。', description: '吃过的认真评，想去的慢慢补。评价很主观，出发前也读一读旅行手记。', action: '向下阅读前言', contentAction: '查看榜单' },
     map: { title: '把想去的，放在地图上。', description: '按位置找店 · 查看附近。只显示评级，点开才是地点和评价。', action: '向下阅读前言', contentAction: '打开评级地图' },
-    markdown: { title: '完整记录，慢慢读。', description: '保留完整章节与评价，安静地读这份私人指南。', action: '向下阅读前言', contentAction: '阅读完整原文' }
+    // Keep the stored mode ID so existing visitors' preferences still work.
+    markdown: { title: '吃什么，住哪里，怎么逛。', description: '早茶、住宿和老城散步。把榜单之外的经验，写进旅行手记。', action: '向下阅读前言', contentAction: '翻开旅行手记' }
   };
   let activeView = 'tier';
   let modeAnimations = [];

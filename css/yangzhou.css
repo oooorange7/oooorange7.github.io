@@ -501,6 +501,42 @@ html.yz-document, .yz-feature {
 .yz-colophon a { color: inherit; }
 .yz-colophon a:last-child { margin-left: auto; }
 
+/* A private note, not a public comment wall. */
+.yz-feedback-callout { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 28px; border-top: 1px solid var(--block-border); }
+.yz-feedback-callout h3 { margin: 8px 0; font-size: clamp(21px, 3vw, 28px); letter-spacing: -.035em; }
+.yz-feedback-callout p:last-child { margin: 0; color: var(--text-p3); font-size: 14px; line-height: 1.8; }
+.yz-feedback-primary { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-height: 48px; padding: 12px 21px; border: 0; border-radius: 999px; background: #0071e3; color: #fff !important; text-decoration: none; font: 600 14px/1.6 var(--yz-font); cursor: pointer; flex-shrink: 0; }
+.yz-feedback-primary:hover { background: #005fc0; }
+.yz-feedback-primary:focus-visible, .yz-feedback-link:focus-visible { outline: 3px solid var(--theme-link); outline-offset: 4px; }
+.yz-feedback-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 5px 0; border: 0; background: transparent; color: var(--theme-link); text-align: left; font: 600 13px/1.6 var(--yz-font); cursor: pointer; }
+.yz-feedback-tea { margin-top: 12px; }
+.yz-feedback-inline { margin-top: 28px; padding: 20px 22px; border-radius: 16px; background: var(--block); }
+.yz-feedback-inline p { margin: 0 0 8px; font-size: 14px; line-height: 1.8; }
+.yz-feedback-inline small { display: block; color: var(--text-p3); font-size: 12px; }
+.yz-feedback-dialog { width: min(580px, calc(100vw - 32px)); }
+.yz-feedback-dialog .yz-dialog-body { padding: clamp(28px, 5vw, 44px); }
+.yz-feedback-dialog .yz-dialog-body h2 { margin: 18px 20px 20px 0; font-size: clamp(25px, 4vw, 32px); letter-spacing: -.04em; }
+.yz-feedback-dialog p { color: var(--text-p2); font-size: 14px; line-height: 1.9; }
+.yz-feedback-dialog .yz-section-label { font-size: 10px; }
+.yz-feedback-dialog .yz-feedback-context { color: var(--theme-link); font-weight: 600; }
+.yz-feedback-dialog .yz-feedback-privacy { margin: 22px 0; font-size: 12px; color: var(--text-p3); }
+.yz-feedback-dialog .yz-feedback-primary { margin-top: 8px; }
+.yz-feedback-address { margin-top: 24px; }
+.yz-feedback-address label { display: block; margin-bottom: 8px; font-size: 12px; color: var(--text-p3); }
+.yz-feedback-address > div { display: flex; align-items: center; gap: 8px; }
+.yz-feedback-address input { width: 100%; min-width: 0; padding: 11px 12px; border: 1px solid var(--block-border); border-radius: 10px; background: var(--block); color: var(--text-p1); font: 13px/1.6 var(--yz-font); }
+.yz-feedback-dialog button[data-feedback-copy-email], .yz-feedback-dialog button[data-feedback-copy-template] { min-height: 42px; flex-shrink: 0; padding: 9px 12px; border: 1px solid var(--block-border); border-radius: 10px; background: var(--block); color: var(--text-p1); font: 600 12px/1.5 var(--yz-font); cursor: pointer; }
+.yz-feedback-template { margin-top: 20px; font-size: 12px; color: var(--text-p2); }
+.yz-feedback-template summary { cursor: pointer; padding: 8px 0; }
+.yz-feedback-template textarea { display: block; width: 100%; min-height: 150px; max-height: 280px; margin: 10px 0; padding: 12px; border: 1px solid var(--block-border); border-radius: 10px; background: var(--block); color: var(--text-p1); font: 12px/1.8 var(--yz-font); resize: vertical; }
+.yz-feedback-dialog .yz-feedback-status { margin: 14px 0 0; color: var(--theme-link); font-size: 12px; }
+.yz-feedback-status:empty { display: none; }
+.yz-feedback-dialog input:focus-visible, .yz-feedback-dialog textarea:focus-visible, .yz-feedback-dialog summary:focus-visible, .yz-feedback-dialog button:focus-visible { outline: 2px solid var(--theme-link); outline-offset: 3px; }
+@media (max-width: 600px) {
+  .yz-feedback-callout { align-items: flex-start; flex-direction: column; gap: 20px; }
+  .yz-feedback-callout .yz-feedback-primary, .yz-feedback-dialog .yz-feedback-primary { width: 100%; }
+}
+
 .yz-dialog-copy > :first-child {
   margin-top: 0;
 }

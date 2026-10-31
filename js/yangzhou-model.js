@@ -36,13 +36,17 @@
   const compareRatings = (a, b) => ratingScore(b.rating) - ratingScore(a.rating);
   function readEntries(source) {
     const entries = [];
-    const nodes = [...source.children];
+    // Stellar can wrap source tables after rendering the feature. Keep those
+    // rows in their original order instead of losing all early-tea entries.
+    const nodes = [...source.children].flatMap(node => node.tagName === 'DIV' && node.classList?.contains?.('table-container') ? [...node.children] : [node]);
     let category = '其他';
     let group = '';
     nodes.forEach((node, index) => {
       if (node.tagName === 'H1') { category = plain(node.textContent); group = ''; return; }
       if (node.tagName === 'H2') { group = plain(node.textContent); return; }
       if (node.tagName === 'TABLE') {
+        const headings = [...node.querySelectorAll('thead th')].map(cell => plain(cell.textContent));
+        if (!headings.includes('餐厅') || !headings.includes('评级')) return;
         node.querySelectorAll('tbody tr').forEach(row => {
           if (!plain(row.cells[0]?.textContent)) return;
           const details = document.createElement('div');
